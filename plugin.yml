@@ -1,0 +1,29 @@
+name: Control
+author: plusminus2
+version: 0.1
+main: ch.plusminus.control.Control
+
+commands:
+  control:
+    usage: /control <Player>
+  
+  item:
+    usage: /item <Player>
+    
+  inv:
+    usage: /inv <Player>
+    
+  serverram:
+    usage: /serverram
+    
+  serverinfo:
+    usage: /serverinfo
+    
+  worlds:
+    usage: /worlds
+    
+  setlife:
+    usage: /setlife <Player>
+    
+  addplugin:
+    usage: /addplugin <Filename> <Download-URL>
