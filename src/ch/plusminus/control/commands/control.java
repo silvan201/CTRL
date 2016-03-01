@@ -46,7 +46,6 @@ public class control implements CommandExecutor {
 					p.sendMessage(ChatColor.DARK_PURPLE + "IsFlying: " + ChatColor.RED + ziel.isFlying());
 					p.sendMessage(ChatColor.DARK_PURPLE + "IsSneaking: " + ChatColor.RED + ziel.isSneaking());
 					p.sendMessage(ChatColor.DARK_PURPLE + "IsSprinting: " + ChatColor.RED + ziel.isSprinting());
-					p.sendMessage(ChatColor.DARK_PURPLE + "IsSprinting: " + ChatColor.RED + ziel.isFlying());
 					p.sendMessage(ChatColor.DARK_PURPLE + "Gamemode: " + ChatColor.RED + ziel.getGameMode());
 					p.sendMessage(ChatColor.DARK_PURPLE + "");
 					p.sendMessage(ChatColor.DARK_PURPLE + "-----------");
