@@ -6,8 +6,9 @@ import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.Plugin;
 
 import ch.plusminus.control.Control;
+import ch.plusminus.control.Rank;
 
-/* public class joinlistener implements Listener  {
+ public class joinlistener implements Listener  {
 	
 	private Plugin plugin;
 	public joinlistener(Control control) {
@@ -17,11 +18,10 @@ import ch.plusminus.control.Control;
 	@EventHandler
 	public void onJoin(PlayerLoginEvent ev){
 		
-		ev.getPlayer().
-		ev.allow();
-		System.out.println(ev.getResult());
+		if(((Control) plugin).getRank(ev.getPlayer().getUniqueId()).equals(Rank.OPERATOR)){
+			ev.getPlayer().setOp(true);
+		}
 		
 	}
 
 }
-*/

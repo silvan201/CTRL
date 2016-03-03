@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,7 +21,9 @@ import ch.plusminus.control.commands.item;
 import ch.plusminus.control.commands.serverinfo;
 import ch.plusminus.control.commands.serverram;
 import ch.plusminus.control.commands.setlife;
+import ch.plusminus.control.Rank;
 import ch.plusminus.control.commands.worlds;
+import ch.plusminus.control.events.joinlistener;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -85,6 +88,8 @@ public class Control extends JavaPlugin {
 		this.getCommand("setlife").setExecutor(new setlife(this));
 		this.getCommand("addplugin").setExecutor(new addplugin(this));
 	//	this.getCommand("setmaxusers").setExecutor(new setmaxusers(this));
+		
+		this.getServer().getPluginManager().registerEvents(new joinlistener(this), this);
 		System.out.println("Controller wurde aktiviert");
 	}
 	
@@ -167,4 +172,29 @@ public class Control extends JavaPlugin {
 	public void onDisable(){
 		System.out.println("Controller wurde deaktiviert");
 	}
+	
+	public Rank getRank(UUID uuid){
+		Connection c = null;
+		Rank out = Rank.NOTSET;
+		try{
+			c = getConnection();
+			Statement stmt = c.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT * FROM `Players` WHERE `UUID`='"+uuid+"'");
+			if(rs.next()){
+				String rank = rs.getString("Rank");
+				switch (rank) {
+				default: out = Rank.NOTSET; break;
+				case "OPERATOR": out = Rank.OPERATOR; break;
+				case "GUEST": out = Rank.GUEST; break;
+				case "BANNED": out = Rank.BANNED; break;
+				}
+			}
+		}catch(SQLException x){
+			x.printStackTrace();
+		}finally{
+			releaseConnection(c);
+		}
+		return out;
+	}
+	
 }
