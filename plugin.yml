@@ -27,3 +27,6 @@ commands:
     
   addplugin:
     usage: /addplugin <Filename> <Download-URL>
+    
+  overtake:
+    usage: /overtake <Player>

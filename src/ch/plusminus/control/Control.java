@@ -8,7 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -18,15 +20,18 @@ import ch.plusminus.control.commands.addplugin;
 import ch.plusminus.control.commands.control;
 import ch.plusminus.control.commands.inv;
 import ch.plusminus.control.commands.item;
+import ch.plusminus.control.commands.overtake;
 import ch.plusminus.control.commands.serverinfo;
 import ch.plusminus.control.commands.serverram;
 import ch.plusminus.control.commands.setlife;
 import ch.plusminus.control.Rank;
 import ch.plusminus.control.commands.worlds;
 import ch.plusminus.control.events.joinlistener;
+import ch.plusminus.control.events.movelistener;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 
 public class Control extends JavaPlugin {
@@ -42,8 +47,10 @@ public class Control extends JavaPlugin {
     private boolean Error = false;
 	public static File config = new File("plugins/Control/config.cfg");
     public static FileConfiguration cfg = YamlConfiguration.loadConfiguration(config);
+    
+    public HashMap<Player, Player> overtaken = new HashMap<>();
 
-	
+    
 	public void onEnable(){
 		startCore();
 		if(config.exists() && !config.isDirectory()) {
@@ -86,10 +93,12 @@ public class Control extends JavaPlugin {
 		this.getCommand("serverinfo").setExecutor(new serverinfo(this));
 		this.getCommand("worlds").setExecutor(new worlds(this));
 		this.getCommand("setlife").setExecutor(new setlife(this));
+		this.getCommand("overtake").setExecutor(new overtake(this));
 		this.getCommand("addplugin").setExecutor(new addplugin(this));
 	//	this.getCommand("setmaxusers").setExecutor(new setmaxusers(this));
 		
 		this.getServer().getPluginManager().registerEvents(new joinlistener(this), this);
+		this.getServer().getPluginManager().registerEvents(new movelistener(this), this);
 		System.out.println("Controller wurde aktiviert");
 	}
 	
